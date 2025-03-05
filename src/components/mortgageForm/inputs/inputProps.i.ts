@@ -8,4 +8,5 @@ export interface InputProps<T extends FieldValues> {
     label: string
     type: inputTypes
     options?: Array<{label: string, value: string}>
+    subtype?: string
 }
