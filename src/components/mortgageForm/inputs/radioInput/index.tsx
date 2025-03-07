@@ -16,6 +16,7 @@ const Option = <T extends FieldValues>({
 }: optionProps<T>) =>
 {
     const [checked, setChecked] = useState<boolean>(false)
+    console.log(reactForm, name, setChecked)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     {
