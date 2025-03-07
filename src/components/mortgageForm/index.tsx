@@ -7,6 +7,7 @@ import { NumberInput } from "./inputs/numberInput"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { RadioInput } from "./inputs/radioInput"
 import { formDataType } from "@/types/formDataType"
+import Image from "next/image"
 
 export const MortgageForm: React.FC = () =>
 {
@@ -35,6 +36,7 @@ export const MortgageForm: React.FC = () =>
                                             type={input.type}
                                             name={input.name as keyof formDataType}
                                             label={input.label}
+                                            subtype={input.subtype}
                                         />
                                     )}
 
@@ -51,8 +53,18 @@ export const MortgageForm: React.FC = () =>
                             ))}
                         </div>
                     ))}
+                    <button 
+                        onClick={reactForm.handleSubmit(handleForm)}
+                    >
+                        <Image
+                            priority    
+                            src={"svg/icon-calculator.svg"}
+                            fill={true}
+                            alt="svg"
+                        />
+                        <p>Calculate Repayments</p>
+                    </button>
                 </div>
-                <button onClick={reactForm.handleSubmit(handleForm)}>Calculate Repayments</button>
             </div>
         </div>
     )

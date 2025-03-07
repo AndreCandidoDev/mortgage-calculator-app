@@ -1,6 +1,38 @@
 import styles from "./styles.module.scss"
-import { FieldValues } from "react-hook-form"
+import { FieldValues, UseFormReturn } from "react-hook-form"
 import { InputProps } from "../inputProps.i"
+import { useState } from "react"
+
+interface optionProps<T extends FieldValues> {
+    option: { label: string, value: string }
+    reactForm: UseFormReturn<T>
+    name: string
+}
+
+const Option = <T extends FieldValues>({ 
+    option, 
+    reactForm, 
+    name 
+}: optionProps<T>) =>
+{
+    const [checked, setChecked] = useState<boolean>(false)
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    {
+        console.log(e.target.checked)
+    }
+
+    return (
+        <div className={styles.option}>
+            <input
+                checked={checked} 
+                type="radio" 
+                onChange={(e) => handleChange(e)}
+            />
+            <p>{option.label}</p>
+        </div>
+    )
+}
 
 export const RadioInput = <T extends FieldValues>({ 
     reactForm, 
@@ -13,16 +45,16 @@ export const RadioInput = <T extends FieldValues>({
 
     return (
         <div className={styles.inputItem}>
-            <div className={styles.input}>
-                <label>{label}</label>
-        
-            {/* <input
-                type={type}
-                placeholder={label}
-                {...reactForm.register(name, {
-                    required: "Campo Obrigatório",
-                })}
-            /> */}
+            <label>{label}</label>
+            <div className={styles.options}>
+                {options?.map((option, key) => (
+                    <Option 
+                        option={option} 
+                        reactForm={reactForm} 
+                        name={name} 
+                        key={key}
+                    />
+                ))}
             </div>
             {error && <span className={styles.error}>{String(error.message)}</span>}
         </div>

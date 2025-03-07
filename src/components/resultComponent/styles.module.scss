@@ -4,4 +4,35 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background: var(--Slate-900);
+    padding: 1rem;
+    border-radius: 0.8rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 2rem;
+
+    .content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+
+        img {
+            object-fit: contain;
+            width: 200px !important;
+            position: relative !important;
+            height: unset !important;
+        }
+
+        .title {
+            color: var(--White);
+            font-weight: 600;
+        }
+
+        .text {
+            color: var(--Slate-100);
+            text-align: center;
+        }
+    }
 }

@@ -11,7 +11,9 @@
     .content {
         display: flex;
         flex-direction: row;
-        width: 1000px;
-        padding: 2rem;
+        width: 800px;
+        background: var(--White);
+        height: 500px;
+        border-radius: 0.8rem;
     }
 }
