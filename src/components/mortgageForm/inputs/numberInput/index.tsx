@@ -1,5 +1,5 @@
 import styles from "./styles.module.scss"
-import { FieldValues } from "react-hook-form"
+import { FieldValues, Path, PathValue } from "react-hook-form"
 import { InputProps } from "../inputProps.i"
 import { useRef, useState } from "react"
 
@@ -60,6 +60,12 @@ export const NumberInput = <T extends FieldValues>({
         return styles.input
     }
 
+    const handleInput = (e: React.ChangeEvent<HTMLInputElement>) =>
+    {
+        const value = e.target.value
+        reactForm.setValue(name, value as PathValue<T, Path<T>>)
+    }
+
     return (
         <div className={styles.inputItem}>
             <div className={styles.label}>
@@ -72,12 +78,13 @@ export const NumberInput = <T extends FieldValues>({
                 onClick={handleInputClick}
             >
                 <input
-                    type={type}
                     {...reactForm.register(name, {
                         required: "Campo Obrigatório",
                     })}
+                    type={type}
                     ref={inputRef}
                     onBlur={handleBlur}
+                    onChange={(e) => handleInput(e)}
                 />
                 <div className={styles.icon}>
                     {getIcon()}

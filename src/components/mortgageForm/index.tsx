@@ -15,7 +15,14 @@ export const MortgageForm: React.FC = () =>
 
     const handleForm: SubmitHandler<formDataType> = (data) =>
     {
+        reactForm.clearErrors()
+
         console.log(data)
+
+        // if(!data.mortgageType)
+        // {
+        //     reactForm.setError("mortgageType", { type: "custom", message: "custom message" })
+        // }
     }
 
     return (
