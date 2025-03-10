@@ -15,7 +15,7 @@ export const MortgageForm: React.FC = () =>
 {
     const reactForm = useForm<formDataType>()
 
-    const { setClear, clear } = useContext(AppContext)
+    const { setClear, clear, setData } = useContext(AppContext)
 
     useEffect(() => 
     {
@@ -27,16 +27,11 @@ export const MortgageForm: React.FC = () =>
         })
     }, [clear, reactForm])
 
-    const handleForm: SubmitHandler<formDataType> = (data) =>
+    const handleForm: SubmitHandler<formDataType> = (formData) =>
     {
         reactForm.clearErrors()
 
-        console.log(data)
-
-        // if(!data.mortgageType)
-        // {
-        //     reactForm.setError("mortgageType", { type: "custom", message: "custom message" })
-        // }
+        setData({ ...formData })
     }
 
     const handleSubmitForm = () =>
