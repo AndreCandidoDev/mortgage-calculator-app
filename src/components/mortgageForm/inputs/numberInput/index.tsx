@@ -1,7 +1,8 @@
 import styles from "./styles.module.scss"
 import { FieldValues, Path, PathValue } from "react-hook-form"
 import { InputProps } from "../inputProps.i"
-import { useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
+import { AppContext } from "@/context"
 
 export const NumberInput = <T extends FieldValues>({ 
     reactForm, 
@@ -18,6 +19,16 @@ export const NumberInput = <T extends FieldValues>({
     const inputRef = useRef<HTMLInputElement>(null)
 
     const [isFocused, setIsFocused] = useState(false)
+
+    const { clear } = useContext(AppContext)
+
+    useEffect(() => 
+    {
+        if(inputRef.current)
+        {
+            inputRef.current.value = ""
+        }
+    }, [clear])
 
     const handleInputClick = () => 
     {
@@ -52,12 +63,24 @@ export const NumberInput = <T extends FieldValues>({
 
     const inputClassName = () =>
     {
+        let className = styles.input
+
         if(subtype === 'currency')
         {
-            return styles.inputIconLeft   
+            className = styles.inputIconLeft   
         }
 
-        return styles.input
+        if(isFocused)
+        {
+            className = className + " " + styles.focused
+        }
+
+        if(error)
+        {
+            className = className + " " + styles.focusedError
+        }
+
+        return className
     }
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -73,13 +96,13 @@ export const NumberInput = <T extends FieldValues>({
             </div>
             <div 
                 ref={inputDivRef}
-                className={`${inputClassName()} ${isFocused ? styles.focused : ''}`}
+                className={inputClassName()}
                 tabIndex={-1}
                 onClick={handleInputClick}
             >
                 <input
                     {...reactForm.register(name, {
-                        required: "Campo Obrigatório",
+                        required: "This Field Is Required",
                     })}
                     type={type}
                     ref={inputRef}

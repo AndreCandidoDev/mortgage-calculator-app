@@ -8,10 +8,24 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { RadioInput } from "./inputs/radioInput"
 import { formDataType } from "@/types/formDataType"
 import Image from "next/image"
+import { useContext, useEffect } from "react"
+import { AppContext } from "@/context"
 
 export const MortgageForm: React.FC = () =>
 {
     const reactForm = useForm<formDataType>()
+
+    const { setClear, clear } = useContext(AppContext)
+
+    useEffect(() => 
+    {
+        reactForm.reset({
+            mortgageAmount: "",
+            mortgageTerm: "",
+            interestRate: "",
+            mortgageType: ""
+        })
+    }, [clear, reactForm])
 
     const handleForm: SubmitHandler<formDataType> = (data) =>
     {
@@ -25,12 +39,28 @@ export const MortgageForm: React.FC = () =>
         // }
     }
 
+    const handleSubmitForm = () =>
+    {
+        const mortgageType = reactForm.getValues("mortgageType")
+
+        if(!mortgageType)
+        {
+            reactForm.setError("mortgageType", { type: "custom", message: "This Field Is Required" })
+        }
+        else
+        {
+            reactForm.clearErrors('mortgageType')
+        }
+
+        reactForm.handleSubmit(handleForm)()
+    }
+
     return (
         <div className={styles.mortgageForm}>
             <div className={styles.content}>
                 <div className={styles.formHeader}>
                     <p>Mortgage Calculator</p>
-                    <p>Clear All</p>
+                    <p onClick={() => setClear(!clear)}>Clear All</p>
                 </div>
                 <div className={styles.form}>
                     {parseForm(formMortgage).map((row, key) => (
@@ -61,7 +91,7 @@ export const MortgageForm: React.FC = () =>
                         </div>
                     ))}
                     <button 
-                        onClick={reactForm.handleSubmit(handleForm)}
+                        onClick={() => handleSubmitForm()}
                     >
                         <Image
                             priority    

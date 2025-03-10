@@ -1,59 +1,9 @@
 import styles from "./styles.module.scss"
-import { FieldValues, Path, PathValue, UseFormReturn } from "react-hook-form"
+import { Option } from "./option"
+import { FieldValues, Path, PathValue } from "react-hook-form"
 import { InputProps } from "../inputProps.i"
-import { useEffect, useState } from "react"
-
-interface optionProps<T extends FieldValues> {
-    option: { label: string, value: string }
-    reactForm: UseFormReturn<T>
-    name: Path<T>
-    stateRadio: { [key: string]: boolean }
-    setStateRadio: React.Dispatch<React.SetStateAction<{[key: string]: boolean}>>
-    setSelectedOption: React.Dispatch<React.SetStateAction<string | null>> 
-}
-
-const Option = <T extends FieldValues>({ 
-    option, 
-    reactForm, 
-    name,
-    stateRadio,
-    setStateRadio, 
-    setSelectedOption
-}: optionProps<T>) =>
-{
-    const error = reactForm.formState.errors[name as keyof T]
-
-    const handleChange = () =>
-    {        
-        const data = stateRadio
-
-        const keys = Object.keys(data)
-
-        for(let i = 0; i < keys.length; i++)
-        {
-            data[keys[i]] = false
-        }
-        
-        data[option.value] = true
-
-        setStateRadio({ ...data })
-
-        setSelectedOption(option.value)
-    }
-
-    return (
-        <div className={styles.option} onClick={() => handleChange()}>
-            {Object.keys(stateRadio).length > 0 && (
-                <input
-                    checked={stateRadio[option.value]} 
-                    type="radio" 
-                />
-            )}
-            <p>{option.label}</p>
-            {error && <span className={styles.error}>{String(error.message)}</span>}
-        </div>
-    )
-}
+import { useContext, useEffect, useState } from "react"
+import { AppContext } from "@/context"
 
 export const RadioInput = <T extends FieldValues>({ 
     reactForm, 
@@ -67,6 +17,8 @@ export const RadioInput = <T extends FieldValues>({
     const [stateRadio, setStateRadio] = useState<{[key: string]: boolean}>({})
     const [selectedOption, setSelectedOption] = useState<string | null>(null)
 
+    const { clear } = useContext(AppContext)
+
     useEffect(() => 
     {
         const data: {[key: string]: boolean} = {}
@@ -77,7 +29,9 @@ export const RadioInput = <T extends FieldValues>({
         })
 
         setStateRadio({ ...data })
-    }, [options])
+
+        setSelectedOption(null)
+    }, [options, clear])
 
     useEffect(() => 
     {
@@ -92,8 +46,6 @@ export const RadioInput = <T extends FieldValues>({
                     <Option 
                         key={key}
                         option={option} 
-                        reactForm={reactForm} 
-                        name={name} 
                         stateRadio={stateRadio}
                         setStateRadio={setStateRadio}
                         setSelectedOption={setSelectedOption}

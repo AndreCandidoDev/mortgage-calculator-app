@@ -18,6 +18,23 @@
             padding: 0.5rem;
             border: 1px solid var(--Slate-300);
             cursor: pointer;
+            font-weight: 600;
+
+            input[type='radio'] {
+                cursor: pointer;
+                accent-color: var(--Lime);
+            }
         }
+
+        .optionSelected {
+            background: #d7da2f8a;
+            border-color: var(--Lime);
+        }
+    }
+
+    .error {
+        user-select: none;
+        color: var(--Red);
+        font-size: 14px;
     }
 }

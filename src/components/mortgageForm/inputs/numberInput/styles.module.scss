@@ -35,11 +35,26 @@
         }
     }
 
+    .focusedError {
+        border-color: var(--Red);
+    
+        .icon {
+            background: var(--Red);
+            color: var(--White);
+        }
+    }
+
     .input {
         flex-direction: row;
     }
 
     .inputIconLeft {
         flex-direction: row-reverse;
+    }
+
+    .error {
+        user-select: none;
+        color: var(--Red);
+        font-size: 14px;
     }
 }
