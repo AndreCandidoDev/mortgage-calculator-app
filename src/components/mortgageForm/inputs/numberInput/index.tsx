@@ -47,7 +47,7 @@ export const NumberInput = <T extends FieldValues>({
     {
         if(subtype === 'currency')
         {
-            return "$"
+            return "£"
         }
         else if(subtype === "year")
         {
@@ -83,6 +83,16 @@ export const NumberInput = <T extends FieldValues>({
         return className
     }
 
+    const iconClassName = () =>
+    {
+        if(subtype === 'currency')
+        {
+            return styles.icon + " " + styles.iconLeft
+        }
+
+        return styles.icon
+    }
+
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) =>
     {
         const value = e.target.value
@@ -109,7 +119,7 @@ export const NumberInput = <T extends FieldValues>({
                     onBlur={handleBlur}
                     onChange={(e) => handleInput(e)}
                 />
-                <div className={styles.icon}>
+                <div className={iconClassName()}>
                     {getIcon()}
                 </div>
             </div>

@@ -11,7 +11,7 @@ export const ResultComponent: React.FC = () =>
 
     const [calculated, setCalculated] = useState<boolean>(false)
 
-    const [payments, setPayments] = useState({ monthly: 0, repay: 0 })
+    const [payments, setPayments] = useState({ monthly: 0 || "", repay: 0 || "" })
 
     const getResults = () =>
     {
@@ -35,7 +35,17 @@ export const ResultComponent: React.FC = () =>
             repay = (monthly * mortgageTerm) + mortgageAmount
         }
 
-        const newPayment = { monthly: monthly, repay: repay }
+        const newPayment = { 
+            monthly: new Intl.NumberFormat('en-GB', {
+                style: 'currency',
+                currency: 'GBP',
+            }).format(monthly), 
+            repay: new Intl.NumberFormat('en-GB', {
+                style: 'currency',
+                currency: 'GBP',
+            }).format(repay) 
+        }
+
         setPayments({ ...newPayment })
     }
 
@@ -77,12 +87,12 @@ export const ResultComponent: React.FC = () =>
                     <div className={styles.results}>
                         <div className={styles.monthly}>
                             <p className={styles.text}>Your monthly repayments</p>
-                            <p className={styles.monthlyPayment}>${payments.monthly}</p>
+                            <p className={styles.monthlyPayment}>{payments.monthly}</p>
                         </div>
                         <div className={styles.divider}></div>
                         <div className={styles.repayment}>
                             <p className={styles.text}>Total you´ll repay over the term</p>
-                            <p className={styles.repay}>${payments.repay}</p>
+                            <p className={styles.repay}>{payments.repay}</p>
                         </div>
                     </div>
                 </div>

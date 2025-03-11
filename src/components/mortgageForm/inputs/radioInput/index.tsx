@@ -40,7 +40,9 @@ export const RadioInput = <T extends FieldValues>({
 
     return (
         <div className={styles.inputItem}>
-            <label>{label}</label>
+            <div className={styles.label}>
+                <label>{label}</label>
+            </div>
             <div className={styles.options}>
                 {options?.map((option, key) => (
                     <Option 

@@ -4,6 +4,10 @@
     flex-direction: column;
     gap: 0.2rem;
 
+    .label {
+        color: var(--Slate-500);
+    }
+
     .options {
         display: flex;
         flex-direction: column;
@@ -19,10 +23,15 @@
             border: 1px solid var(--Slate-300);
             cursor: pointer;
             font-weight: 600;
+            border-radius: 0.3rem;
 
             input[type='radio'] {
                 cursor: pointer;
                 accent-color: var(--Lime);
+            }
+
+            &:hover {
+                border-color: #d7da2f8a;
             }
         }
 

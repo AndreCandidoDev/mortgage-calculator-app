@@ -29,6 +29,10 @@
                 color: var(--Slate-500);
                 cursor: pointer;
                 text-decoration: underline;
+
+                &:hover {
+                    color: var(--Slate-900);
+                }
             }
         }
 
@@ -67,6 +71,34 @@
                     width: 20px !important;
                     position: relative !important;
                     height: unset !important;
+                }
+
+                &:hover {
+                    background: #d7da2f8a;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .mortgageForm {
+        .content {
+            .formHeader {
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                gap: 1rem;
+
+            }
+            .form {
+                .row {
+                    flex-direction: column;
+                }
+
+                button {
+                    width: 100%;
+                    justify-content: center;
                 }
             }
         }
